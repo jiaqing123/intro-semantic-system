@@ -1,0 +1,30 @@
+# ============================================================
+# docker-compose.yml —— 基础配置（环境无关）
+#
+# 组合方式：
+#   本地开发（自动合并 override）: docker compose up --build -d
+#   生产部署:  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#   校验配置:  docker compose config --quiet
+#
+# 密钥来源：项目根目录 .env（已被 .gitignore 忽略，模板见 .env.example）。
+# 必填变量使用 ${VAR:?} 在启动时快速失败，避免带空密钥静默运行。
+# ============================================================
+services:
+  semanticsystemconsole:
+    image: ${DOCKER_REGISTRY:-}semanticsystemconsole:${APP_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: SemanticSystemConsole/Dockerfile
+      args:
+        BUILD_CONFIGURATION: ${BUILD_CONFIGURATION:-Release}
+    environment:
+      # 必填：API 密钥（缺失时 docker compose 直接报错退出）
+      DS_API_INTRO_AI: "${DS_API_INTRO_AI:?DS_API_INTRO_AI is required, see .env.example}"
+      # 可选：应用配置
+      LOG_LEVEL: ${LOG_LEVEL:-Information}
+      DOTNET_ENVIRONMENT: ${DOTNET_ENVIRONMENT:-Production}
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

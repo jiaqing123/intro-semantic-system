@@ -1,0 +1,19 @@
+# ============================================================
+# docker-compose.prod.yml —— 生产部署覆盖
+#
+# 用法：
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# 说明：本服务是一次性控制台任务（打印结果后进程退出，容器随之停止），
+#       因此不设 restart 策略；若将来改为常驻服务，请设置 restart: unless-stopped。
+# ============================================================
+services:
+  semanticsystemconsole:
+    image: ${DOCKER_REGISTRY:-}semanticsystemconsole:${APP_VERSION:-latest}
+    build:
+      args:
+        BUILD_CONFIGURATION: Release
+    environment:
+      DOTNET_ENVIRONMENT: Production
+    stdin_open: false
+    tty: false
