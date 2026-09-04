@@ -32,7 +32,9 @@ kernel.ImportPluginFromFunctions("MyTools",
 // ② 开启自动工具调用
 var settings = new OpenAIPromptExecutionSettings
 {
-    ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
+    Temperature = 0.7,
+    ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
+    ReasoningEffort = "low",
 };
 
 // ③ 让 AI 自己决定：这句该不该调工具、调哪个
