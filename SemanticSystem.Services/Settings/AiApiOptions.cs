@@ -1,6 +1,6 @@
-﻿namespace SemanticSystem.Services
+﻿namespace SemanticSystem.Services.Settings
 {
-    public class AiApiOptions
+    internal class AiApiOptions
     {
         public string BaseUrl { get; set; } = "https://api.deepseek.com";
 
