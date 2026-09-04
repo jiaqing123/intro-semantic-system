@@ -1,22 +1,10 @@
-﻿using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
-
-namespace SemanticSystem.Services.Demos
+﻿namespace SemanticSystem.Services.Demos
 {
     public static class OrderBotDemo
     {
         public static async Task RunAsync(CancellationToken cancellationToken = default)
         {
-            var options = new AiApiOptions();
-
-            var builder = Kernel.CreateBuilder();
-
-            builder.AddOpenAIChatCompletion(
-                modelId: options.ModelId,
-                apiKey: options.ApiKey,
-                endpoint: new Uri(options.BaseUrl));
-
-            var kernel = builder.Build();
+            var kernel = KernelHelper.CreateNew();
 
             // 模拟订单数据（内存字典）
             var orders = new Dictionary<string, string>

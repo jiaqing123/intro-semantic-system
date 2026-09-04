@@ -1,6 +1,4 @@
-﻿using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
+﻿using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace SemanticSystem.Services.Demos
 {
@@ -8,14 +6,7 @@ namespace SemanticSystem.Services.Demos
     {
         public static async Task RunAsync(CancellationToken cancellationToken = default)
         {
-            var options = new AiApiOptions();
-
-            var builder = Kernel.CreateBuilder();
-            builder.AddOpenAIChatCompletion(
-                modelId: options.ModelId,
-                apiKey: options.ApiKey,
-                endpoint: new Uri(options.BaseUrl));
-            var kernel = builder.Build();
+            var kernel = KernelHelper.CreateNew();
 
             // How to debug
             // 1. In container window, start terminal from the running container

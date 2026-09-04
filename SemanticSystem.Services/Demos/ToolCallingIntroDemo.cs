@@ -1,22 +1,10 @@
-﻿using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
-
-namespace SemanticSystem.Services.Demos
+﻿namespace SemanticSystem.Services.Demos
 {
     public static class ToolCallingIntroDemo
     {
         public static async Task RunAsync(CancellationToken cancellationToken = default)
         {
-            var options = new AiApiOptions();
-
-            var builder = Kernel.CreateBuilder();
-
-            builder.AddOpenAIChatCompletion(
-                modelId: options.ModelId,
-                apiKey: options.ApiKey,
-                endpoint: new Uri(options.BaseUrl));
-
-            var kernel = builder.Build();
+            var kernel = KernelHelper.CreateNew();
 
             // ① 工具 = 普通 C# 方法，完全不需要关心上下文
             kernel.ImportPluginFromFunctions("MyTools",
