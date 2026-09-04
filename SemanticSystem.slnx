@@ -5,5 +5,7 @@
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
+  <Project Path="SemanticSystem.Services/SemanticSystem.Services.csproj" Id="dfda6a1d-8676-4b0f-9e9c-9c0d48ecc05c" />
   <Project Path="SemanticSystemConsole/SemanticSystemConsole.csproj" />
+  <Project Path="ToolDemo/ToolDemo.csproj" Id="859a92d6-a03b-4c05-8a92-d51627726c8d" />
 </Solution>

@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 # docker-compose.override.yml —— 本地开发覆盖
 #
 # 执行 docker compose up 时自动与 docker-compose.yml 合并（无需 -f 指定）。
@@ -13,5 +13,14 @@ services:
         BUILD_CONFIGURATION: Debug
     environment:
       DOTNET_ENVIRONMENT: Development
+
+  tooldemo:
+    image: ${DOCKER_REGISTRY:-}tooldemo:dev
+    build:
+      args:
+        BUILD_CONFIGURATION: Debug
+    environment:
+      DOTNET_ENVIRONMENT: Development
     # 注意：不要在此设置 tty/stdin_open——会把终端转义序列混入 docker logs。
     # VS 调试所需的 tty 由 VS 自动生成的调试配置（obj/Docker/*.g.yml）提供。
+

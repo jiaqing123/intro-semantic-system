@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 # docker-compose.yml —— 基础配置（环境无关）
 #
 # 组合方式：
@@ -21,6 +21,25 @@ services:
       # 必填：API 密钥（缺失时 docker compose 直接报错退出）
       DS_API_INTRO_AI: "${DS_API_INTRO_AI:?DS_API_INTRO_AI is required, see .env.example}"
       # 可选：应用配置
+      LOG_LEVEL: ${LOG_LEVEL:-Information}
+      DOTNET_ENVIRONMENT: ${DOTNET_ENVIRONMENT:-Production}
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  tooldemo:
+    image: ${DOCKER_REGISTRY:-}tooldemo:${APP_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ToolDemo/Dockerfile
+      args:
+        BUILD_CONFIGURATION: ${BUILD_CONFIGURATION:-Release}
+    environment:
+      # 如果 ToolDemo 也需要 DeepSeek API Key，可复用同一个变量
+      DS_API_INTRO_AI: "${DS_API_INTRO_AI:?DS_API_KEY is required}"   # 也可以换成新变量，按需修改
+      # 或者使用新变量：DS_API_TOOLDEMO: "${DS_API_TOOLDEMO:?...}"
       LOG_LEVEL: ${LOG_LEVEL:-Information}
       DOTNET_ENVIRONMENT: ${DOTNET_ENVIRONMENT:-Production}
     logging:

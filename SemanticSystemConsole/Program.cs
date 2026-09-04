@@ -1,7 +1,7 @@
 ﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using SemanticSystemConsole;
+using SemanticSystem.Services;
 
 var options = new AiApiOptions();
 
@@ -11,9 +11,6 @@ builder.AddOpenAIChatCompletion(
     apiKey: options.ApiKey,
     endpoint: new Uri(options.BaseUrl));
 var kernel = builder.Build();
-
-//var reply = await kernel.InvokePromptAsync("introduce yourself in one sentence.");
-//Console.WriteLine(reply);
 
 // How to debug
 // 1. In container window, start terminal from the running container
