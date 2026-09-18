@@ -1,2 +1,1 @@
-﻿
-Console.WriteLine("SemanticSystemConsole");
+﻿await ParseEmailInfoDemo.RunAsync();
