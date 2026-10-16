@@ -1,40 +1,39 @@
 ﻿using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace SemanticSystem.Services.Demos
+namespace SemanticSystem.Services.Demos;
+
+public static class MultipleMessageDemo
 {
-    public static class MultipleMessageDemo
+    public static async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        public static async Task RunAsync(CancellationToken cancellationToken = default)
+        var kernel = KernelHelper.CreateNew();
+
+        // How to debug
+        // 1. In container window, start terminal from the running container
+        // 2. In the terminal, run: dotnet /app/bin/Debug/net10.0/SemanticSystemConsole.dll
+        // 3. In the container window, attach debug to the terminal
+
+        // 多轮对话的正确姿势：拿聊天服务 + 维护历史
+        var chat = kernel.GetRequiredService<IChatCompletionService>();
+        var history = new ChatHistory();
+
+        while (true)
         {
-            var kernel = KernelHelper.CreateNew();
-
-            // How to debug
-            // 1. In container window, start terminal from the running container
-            // 2. In the terminal, run: dotnet /app/bin/Debug/net10.0/SemanticSystemConsole.dll
-            // 3. In the container window, attach debug to the terminal
-
-            // 多轮对话的正确姿势：拿聊天服务 + 维护历史
-            var chat = kernel.GetRequiredService<IChatCompletionService>();
-            var history = new ChatHistory();
-
-            while (true)
+            Console.Write("User: ");
+            var userInput = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(userInput))
             {
-                Console.Write("User: ");
-                var userInput = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(userInput))
-                {
-                    break;
-                }
-
-                history.AddUserMessage(userInput);
-                var reply = await chat.GetChatMessageContentAsync(history, new OpenAIPromptExecutionSettings()
-                {
-                    Temperature = 0.3679,
-                }, cancellationToken: cancellationToken);
-
-                Console.WriteLine($"AI: {reply}");
-                history.AddAssistantMessage(reply.ToString());   // 关键：把 AI 的回答也放回历史
+                break;
             }
+
+            history.AddUserMessage(userInput);
+            var reply = await chat.GetChatMessageContentAsync(history, new OpenAIPromptExecutionSettings()
+            {
+                Temperature = 0.3679,
+            }, cancellationToken: cancellationToken);
+
+            Console.WriteLine($"AI: {reply}");
+            history.AddAssistantMessage(reply.ToString());   // 关键：把 AI 的回答也放回历史
         }
     }
 }

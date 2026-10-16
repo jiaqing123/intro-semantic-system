@@ -12,6 +12,11 @@ obj/
 .env.*
 !.env.example
 
+# Local Database
+*.db
+*.db-shm
+*.db-wal
+
 # IDE / Editor
 .vscode/
 .idea/
