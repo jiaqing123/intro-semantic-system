@@ -48,6 +48,7 @@ public static class ParseEmailInfoDemo
         var settings = new OpenAIPromptExecutionSettings
         {
             Temperature = 0.7,
+            // 区别在这里：告诉 AI 自动调用注册的工具
             ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
             ReasoningEffort = "low",
         };

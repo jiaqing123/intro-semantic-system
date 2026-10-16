@@ -1,1 +1,1 @@
-﻿await ParseEmailInfoDemo.RunAsync();
+﻿await StreamAnswerDemo.RunAsync();
